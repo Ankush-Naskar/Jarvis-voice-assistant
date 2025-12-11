@@ -1,6 +1,7 @@
 import os
 import json
 
+# ==== Create user info file ====
 def create_user_info():
     if not os.path.exists("user_settings.py"):
         data = '''
@@ -16,10 +17,8 @@ DURATION_OF_TIMEOUT = 60 # Durationn should be in second
 
         with open("user_settings.py", "w", encoding="utf-8") as f:
             f.write(data)
-# create_user_info()
 
-
-
+# ==== config.json handeling ====
 def json_handling():
     with open("data_source/config.json", "r", encoding="utf-8") as f:
         json_data = json.load(f)
@@ -27,13 +26,13 @@ def json_handling():
 
 config_data = json_handling() 
 
-
+# ==== youtube video link handeling ====
 def youtube_videos(name): 
 
     video_links = config_data["videos"].get(name)
     return(video_links)
 
-
+# ==== link handeling ====
 def link_open(name):
     links = config_data["links"].get(name)
     return(links)
