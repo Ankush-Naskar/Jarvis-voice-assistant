@@ -80,7 +80,7 @@ To stop Jarvis, say    ➔ *"stop jarvis"*
 
 ## 📁 FILE & FOLDER STRUCTURE
 
-![File-Structure](image.png)
+![File-Structure](media/image.png)
 
 ## 🧑‍💻 USER CONFIGURATION
 

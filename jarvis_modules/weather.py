@@ -1,15 +1,12 @@
 # import asyncio
 import python_weather
-from datetime import datetime, timedelta
+from datetime import datetime
 import statistics
 import user_settings
-# from jarvis_system.speak_system import speak
 
 user_location = user_settings.LOCATION_FOR_WEATHER
 
-# =======================
-# Current weather report
-# =======================
+# ==== Current weather report ====
 
 async def get_current_weather(location=user_location):
     async with python_weather.Client(unit=python_weather.METRIC) as client:
@@ -26,9 +23,7 @@ async def get_current_weather(location=user_location):
         except Exception as e:
             return(f"Error fetching current weather: {str(e)}")
 
-# =========================
-# Date wise weather report
-# =========================
+# ==== Date wise weather report ====
 
 async def get_weather_by_date(location, target_date):
     # Convert string to date object if needed

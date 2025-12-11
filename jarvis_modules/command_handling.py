@@ -1,11 +1,12 @@
 import webbrowser
 # from data_source import music_library, URLs
-from jarvis_modules.speak_system import speak
-from data_source.Weather import get_current_weather, get_weather_by_date
+from jarvis_modules.speech import speak
+from jarvis_modules.weather import get_current_weather, get_weather_by_date
 from datetime import datetime, timedelta
 import asyncio
 import user_settings
-from jarvis_modules.file_handling import youtube_videos, link_open
+from jarvis_modules import ai_service
+from jarvis_modules.file_and_data_handling import youtube_videos, link_open
 
 
 # === For opening link in browser ===
@@ -62,3 +63,24 @@ def weather_update(c):
     else:
         l = asyncio.run(get_current_weather())
         speak(l)
+
+def processCommand(c):
+
+    # Opening links.
+    if c.lower().startswith("open"):
+        open_links(c)
+    # Google search.
+    elif c.lower().startswith("search"):
+        google_search(c)
+    # Playing songs
+    elif c.lower().startswith("play"):
+        play_YT_song_video(c)
+    # Weather updates
+    elif "weather update" in c.lower():
+        weather_update(c)
+    # Ai integration --OpenAi
+    else:
+        try:
+            speak(ai_service.AI(c))
+        except:
+            return "Error occurred !"
