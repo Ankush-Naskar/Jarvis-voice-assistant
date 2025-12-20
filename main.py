@@ -1,9 +1,9 @@
 import time
 from jarvis_modules.file_and_data_handling import create_user_info
 create_user_info()
-from jarvis_modules import command_handling, notify
+from jarvis_modules import commands, notify
 from jarvis_modules.speech import speak
-from jarvis_modules.speech_recognization import jarvis_activate, jarvis_speech_recognize, jarvis_stop
+from jarvis_modules.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
 import user_settings
 
 # Guide
@@ -29,7 +29,7 @@ if __name__ == "__main__":
             # activating jarvis 
             if word.lower() in ["jarvis", "hello jarvis"]:
                 command = jarvis_activate()
-                command_handling.processCommand(command)
+                commands.processCommand(command)
                 last_active = time.time()
             # Closing Jarvis
             elif word.lower() in ["stop program", "stop jarvis"]:

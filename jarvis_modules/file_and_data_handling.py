@@ -20,7 +20,7 @@ DURATION_OF_TIMEOUT = 60 # Durationn should be in second
 
 # ==== config.json handeling ====
 def json_handling():
-    with open("data_source/config.json", "r", encoding="utf-8") as f:
+    with open("data/config.json", "r", encoding="utf-8") as f:
         json_data = json.load(f)
     return json_data
 
