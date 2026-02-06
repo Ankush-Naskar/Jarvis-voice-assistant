@@ -1,14 +1,15 @@
 import time
-from jarvis_modules.file_and_data_handling import create_user_info
-create_user_info()
 from jarvis_modules import commands, notify
 from jarvis_modules.speech import speak
 from jarvis_modules.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
-import user_settings
+from data_handling import DataHandling
+
+data = DataHandling()
+assistant_name = data.get_settings("basic", "assistant_name")
 
 # Guide
-print("say 'jarvis' to start\nand 'stop program' to stop jarvis\n")
-speak("Initializing jarvis......")
+print(f"Say stop program' to stop {assistant_name}\n")
+speak(f"Activating {assistant_name}")
 notify.notify_start()
 
             
@@ -16,26 +17,23 @@ if __name__ == "__main__":
 
     # Time Checking --- notification 
     last_active = time.time()
-    timeout_duration = user_settings.DURATION_OF_TIMEOUT
+    timeout_duration = data.get_settings("basic", "timeout_seconds")
     while True:
-        print("Recognizing.....")
+        print("Listening.......")
         # Closing notification --- time limit
         if time.time() - last_active > timeout_duration:
             notify.notify_timeout()
             break
 
         try:
-            word = jarvis_speech_recognize()
-            # activating jarvis 
-            if word.lower() in ["jarvis", "hello jarvis"]:
-                command = jarvis_activate()
-                commands.processCommand(command)
-                last_active = time.time()
-            # Closing Jarvis
-            elif word.lower() in ["stop program", "stop jarvis"]:
+            command = jarvis_activate()
+            print(f"DEBUG: I heard '{command}'")
+            if command.lower() in [f"stop program", "stop {assistant_name}"]:
                 jarvis_stop()
                 break
+            commands.processCommand(command)
+            last_active = time.time()
 
         except Exception as e:
             print("error; {0}".format(e))
-            print("\nsay 'jarvis' to start\nand 'stop jarvis' to stop jarvis\n")
+            print(f"\n'stop {assistant_name}' or 'stop program' to stop {assistant_name}\n")

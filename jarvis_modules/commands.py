@@ -1,18 +1,19 @@
 import webbrowser
-# from data_source import music_library, URLs
 from jarvis_modules.speech import speak
 from jarvis_modules.weather import get_current_weather, get_weather_by_date
 from datetime import datetime, timedelta
 import asyncio
-import user_settings
-from jarvis_modules import ai_service
-from jarvis_modules.file_and_data_handling import youtube_videos, link_open
+from data_handling import DataHandling
+from jarvis_modules.ai_service import ArtificialIntelligence
+
+data_handling = DataHandling()
+ai = ArtificialIntelligence()
 
 
 # === For opening link in browser ===
 def open_links(c):
     search = " ".join(c.lower().split(" ")[1:])
-    link_ = link_open(search)
+    link_ = data_handling.get_bookmarks("links", search)
     
 
     if link_:
@@ -35,7 +36,7 @@ def google_search(c):
 # ==== For playing video and songs in youtube ====
 def play_YT_song_video(c):
     song = " ".join(c.lower().split(" ")[1:])
-    link_ = youtube_videos(song)
+    link_ = data_handling.get_bookmarks("videos", song)
     if link_:
         speak(f"Playing {song}")
         webbrowser.open(link_)
@@ -47,10 +48,10 @@ def play_YT_song_video(c):
 
 # ==== For getting weather report ====
 def weather_update(c):
-    Location = user_settings.LOCATION_FOR_WEATHER
+    Location = data_handling.get_settings("basic", "location")
     
     if "current" in c.lower():
-        l = asyncio.run(get_current_weather())
+        l = asyncio.run(get_current_weather(Location))
         speak(l)
     elif "today" in c.lower():
         today = datetime.today().date()
@@ -61,7 +62,7 @@ def weather_update(c):
         l = asyncio.run(get_weather_by_date(Location, tomorrow))
         speak("tomorrow," + l)
     else:
-        l = asyncio.run(get_current_weather())
+        l = asyncio.run(get_current_weather(Location))
         speak(l)
 
 def processCommand(c):
@@ -81,6 +82,6 @@ def processCommand(c):
     # Ai integration --OpenAi
     else:
         try:
-            speak(ai_service.AI(c))
+            speak(ai.AI(c))
         except:
             return "Error occurred !"

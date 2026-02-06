@@ -1,24 +1,30 @@
 from plyer import notification
+from data_handling import DataHandling
+
+data = DataHandling()
+assistant_name = data.get_settings("basic", "assistant_name")
+
+
 
 def notify_start():
     notification.notify(
-        title="Jarvis",
-        message="Jarvis is listening!\nSay 'jarvis' to start and 'stop jarvis' to stop.",
+        title=f"{assistant_name}",
+        message=f"{assistant_name} is listening!\nSay 'stop {assistant_name}' or 'stop program to stop.",
         timeout=5
     )
 
 def notify_timeout():
     notification.notify(
-        title="Jarvis",
-        message="No activity detected. Shutting down Jarvis.",
+        title=f"{assistant_name}",
+        message=f"No activity detected. Shutting down {assistant_name}.",
         timeout=5
     )
-    print("No activity detected. Shutting down Jarvis.")
+    print(f"No activity detected. Shutting down {assistant_name}.")
 
 def notify_stop():
     notification.notify(
-        title="Jarvis",
-        message="Jarvis closed.",
+        title=f"{assistant_name}",
+        message=f"{assistant_name} closed.",
         timeout=5
     )
-    print("Jarvis closed")
+    print(f"{assistant_name} closed")

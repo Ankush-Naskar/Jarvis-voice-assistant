@@ -1,30 +1,20 @@
-# import asyncio
+
 import python_weather
 from datetime import datetime
 import statistics
-import user_settings
 
-user_location = user_settings.LOCATION_FOR_WEATHER
-
-# ==== Current weather report ====
-
-async def get_current_weather(location=user_location):
+# Current weather report
+async def get_current_weather(location):
     async with python_weather.Client(unit=python_weather.METRIC) as client:
         try:
             weather = await client.get(location)
-            Direction =  weather.wind_direction
-            
-            speech = (f"Currently in {location}, the temperature is {weather.temperature}°C with {weather.description} weather."
-                  f" Wind speed is {weather.wind_speed} km/h from the {Direction},"
-                  f" visibility is {weather.visibility} km, and atmospheric pressure is {weather.pressure} mb.")
-            
+            speech = speech = (f"It's {weather.temperature}°C in {location} with {weather.description} weather.")
             return (speech)
 
         except Exception as e:
             return(f"Error fetching current weather: {str(e)}")
 
-# ==== Date wise weather report ====
-
+#  Date wise weather report
 async def get_weather_by_date(location, target_date):
     # Convert string to date object if needed
     if isinstance(target_date, str):
@@ -40,20 +30,13 @@ async def get_weather_by_date(location, target_date):
 
                     # Extract all hourly wind speeds and pressures
                     wind_speeds = [hour.wind_speed for hour in daily.hourly_forecasts if hour.wind_speed is not None]
-                    pressures = [hour.pressure for hour in daily.hourly_forecasts if hour.pressure is not None]
 
                     # Compute averages
                     avg_wind = statistics.mean(wind_speeds) if wind_speeds else None
-                    avg_pressure = statistics.mean(pressures) if pressures else None
 
                     speech = (f"In {location}, average temperature is expected to be {daily.temperature}°C"
-                        f" with a high of {daily.highest_temperature}°C and low of {daily.lowest_temperature}°C."
-                        f" The average wind speed is expected to be {avg_wind:.1f} km/h, with average atmospheric pressure of {avg_pressure:.1f} mb. ")
-                    
-                    
-                    
-                    
-                    
+                        f" with a high of {daily.highest_temperature}°C and low of {daily.lowest_temperature}°C.")
+
                     # Determine day type
                     conditions = [hourly.description for hourly in daily.hourly_forecasts]
                     if any('rain' in c.lower() for c in conditions):
@@ -81,4 +64,6 @@ async def get_weather_by_date(location, target_date):
         except Exception as e:
             return(f"Weather data not available for {target_date}"
                 f"Note: Weather forecasts are typically available for the next 7-14 days.")
+        
 
+# print(get_current_weather())

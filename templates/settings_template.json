@@ -1,0 +1,24 @@
+{
+    "basic":{
+        "assistant_name": "Jarvis",
+        "user_name": "user",
+        "location": "kolkata",
+        "timeout_seconds": 60
+    },
+    
+    "artificial_intelligence":{
+        "open_ai_api_key": "<Api_key>",
+        "open_ai_model": "llama-3.1-8b-instant",
+        "max_token": 100
+    },
+
+    "commands": {
+        "wake_word": "jarvis",
+        "stop": "stop jarvis",
+        "google_search": "search",
+        "play_media": "play",
+        "open_website": "open",
+        "weather": "weather update"
+    }
+    
+}

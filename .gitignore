@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 audio.mp3
 user_settings.py
+data/
