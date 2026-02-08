@@ -4,6 +4,8 @@ import os
 
 
 def speak(text):
+    if os.path.exists("audio.mp3"):
+        os.remove("audio.mp3")
     tts = gTTS(text)
     tts.save('audio.mp3')
 
