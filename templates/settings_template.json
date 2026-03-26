@@ -3,7 +3,8 @@
         "assistant_name": "Jarvis",
         "user_name": "user",
         "location": "kolkata",
-        "timeout_seconds": 60
+        "timeout_seconds": 60,
+        "voice_model": "en-IN-NeerjaNeural"
     },
     
     "artificial_intelligence":{

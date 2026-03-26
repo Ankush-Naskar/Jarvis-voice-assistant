@@ -65,5 +65,3 @@ async def get_weather_by_date(location, target_date):
             return(f"Weather data not available for {target_date}"
                 f"Note: Weather forecasts are typically available for the next 7-14 days.")
         
-
-# print(get_current_weather())

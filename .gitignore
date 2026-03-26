@@ -3,3 +3,4 @@ __pycache__/
 audio.mp3
 user_settings.py
 data/
+env

@@ -1,7 +1,6 @@
 import speech_recognition as sr
-import time
-from jarvis_modules import notify
-from jarvis_modules.speech import speak
+from modules import notify
+from modules.voice.speech import speak
 from data_handling import DataHandling
 
 data = DataHandling()

@@ -1,10 +1,11 @@
 import time
 import plyer.platforms.win.notification
-from jarvis_modules import notify
-from jarvis_modules.commands import CommandHandling
-from jarvis_modules.speech import speak
-from jarvis_modules.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
+from modules import notify
+# from jarvis_modules.commands import CommandHandling
+from modules.voice.speech import speak
+from modules.voice.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
 from data_handling import DataHandling
+from modules.commands_core import CommandHandling
 
 commands = CommandHandling()
 data = DataHandling()
@@ -45,12 +46,13 @@ def run_jarvis(word=True):
             if command is None:
                 continue
 
-            print(f"DEBUG: I heard '{command}'")
+            print(f"You: '{command}'")
             last_active = time.time()
             if command.lower() in [f"stop program", "stop {assistant_name}"]:
                 jarvis_stop()
                 break
-            commands.processCommand(command)
+            else:
+                commands.processCommand(command)
 
         except Exception as e:
             print("error; {0}".format(e))
