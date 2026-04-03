@@ -1,9 +1,9 @@
 import speech_recognition as sr
 from modules import notify
 from modules.voice.speech import speak
-from data_handling import DataHandling
+from modules.data_handler.data_handling import DataCollecting
 
-data = DataHandling()
+data = DataCollecting()
 assistant_name = data.get_settings("basic", "assistant_name")
 
 

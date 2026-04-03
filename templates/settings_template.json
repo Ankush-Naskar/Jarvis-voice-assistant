@@ -1,20 +1,21 @@
 {
     "basic":{
-        "assistant_name": "Jarvis",
         "user_name": "user",
+        "assistant_name": "Jarvis",
         "location": "kolkata",
         "timeout_seconds": 60,
-        "voice_model": "en-IN-NeerjaNeural"
+        "voice_model": "en-IN-NeerjaNeural",
+        "language": "English"
     },
     
     "artificial_intelligence":{
         "open_ai_api_key": "<Api_key>",
         "open_ai_model": "llama-3.1-8b-instant",
-        "max_token": 100
+        "max_token": 100,
+        "prompt": ""
     },
 
     "commands": {
-        "wake_word": "jarvis",
         "stop": "stop jarvis",
         "google_search": "search",
         "play_media": "play",

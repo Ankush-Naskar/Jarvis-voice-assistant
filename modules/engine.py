@@ -4,11 +4,11 @@ from modules import notify
 # from jarvis_modules.commands import CommandHandling
 from modules.voice.speech import speak
 from modules.voice.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
-from data_handling import DataHandling
-from modules.commands_core import CommandHandling
+from modules.data_handler.data_handling import DataCollecting
+from modules.commands.core import CommandHandling
 
 commands = CommandHandling()
-data = DataHandling()
+data = DataCollecting()
 assistant_name = data.get_settings("basic", "assistant_name")
 
 

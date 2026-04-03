@@ -1,5 +1,5 @@
 # JARVIS - Voice Assistant
-![Thumbnail](media/img1.png)
+![Thumbnail](assets/img1.png)
 
 ## 📌 INTRODUCTION
 
@@ -135,7 +135,7 @@ DURATION_OF_TIMEOUT = 60                       # Auto-shutdown time in seconds
 
 ## 📁 FILE & FOLDER STRUCTURE
 
-![File Structure](media/img2.png)
+![File Structure](assets/img2.png)
 
 ## 🔒 PRIVACY NOTICE
 

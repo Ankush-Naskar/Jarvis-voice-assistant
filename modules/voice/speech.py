@@ -3,7 +3,7 @@ import edge_tts
 import pygame
 import os
 import asyncio
-from data_handling import DataHandling
+from modules.data_handler.data_handling import DataCollecting
 
 def speak(text):
     # Check corrupted  audio.mp3
@@ -11,7 +11,7 @@ def speak(text):
         os.remove("audio.mp3")
     # Load and save Edge-TTS
     async def edge_tts_audio():        
-        VOICE =  DataHandling().get_settings("basic", "voice_model")
+        VOICE =  DataCollecting().get_settings("basic", "voice_model")
         tts = edge_tts.Communicate(text, VOICE)
         await tts.save('audio.mp3')
 

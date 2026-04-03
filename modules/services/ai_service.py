@@ -1,10 +1,10 @@
 from openai import OpenAI
-from data_handling import DataHandling
+from modules.data_handler.data_handling import DataCollecting
 
 class ArtificialIntelligence():
     def __init__(self):
         # Data Loading
-        data = DataHandling()
+        data = DataCollecting()
         API_KEY=data.get_settings("artificial_intelligence", "open_ai_api_key") # API Key
         self.MODEl = data.get_settings("artificial_intelligence", "open_ai_model") # Model Name
         self.MAX_TOKEN = data.get_settings("artificial_intelligence", "max_token") # Max token

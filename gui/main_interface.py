@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import threading
-from main import stop_jarvis_execution, run_jarvis
+from modules.engine import stop_jarvis_execution, run_jarvis
+from gui.settings_interface import SettingInterface
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -34,9 +35,14 @@ class MainInterface(ctk.CTk):
             # Change back to START state
             self.btn.configure(text="🔴 START", text_color="#18D8B8", border_color="#00FFDD")
             self.stop_jarvis()
+        
+    def setting_function(self):
+        self.withdraw()
+        setting = SettingInterface(self)
+        setting.mainloop()
 
     def interface(self):
-        self.settings_btn = ctk.CTkButton(self, text="⚙️", width=40, height=40, compound="right", fg_color="#1D1A1A", text_color="#69CAF0")
+        self.settings_btn = ctk.CTkButton(self, text="⚙️", width=40, height=40, compound="right", fg_color="#1D1A1A", text_color="#69CAF0", command=self.setting_function)
         self.settings_btn.pack(anchor="ne", pady=10, padx=10)
 
         self.status_label = ctk.CTkLabel(self, text="STATUS: OFFLINE", font=("Orbitron", 20, "bold"), text_color="#18D8B8")
@@ -59,6 +65,7 @@ class MainInterface(ctk.CTk):
         )
         self.btn.pack()
 
-app = MainInterface()
-app.interface()
-app.mainloop()
+if __name__ == "__main__":
+    app = MainInterface()
+    app.interface()
+    app.mainloop()

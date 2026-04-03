@@ -2,13 +2,13 @@ from modules.voice.speech import speak
 from modules.services.weather import get_current_weather, get_weather_by_date
 from datetime import datetime, timedelta
 import asyncio
-from data_handling import DataHandling
+from modules.data_handler.data_handling import DataCollecting
 
 
 
 class WeatherHandling():
     def __init__(self):
-        data_handling = DataHandling()
+        data_handling = DataCollecting()
         self.location = data_handling.get_settings("basic", "location")
 
     def weather_update(self, c):
