@@ -4,12 +4,12 @@ from modules import notify
 # from jarvis_modules.commands import CommandHandling
 from modules.voice.speech import speak
 from modules.voice.listener import jarvis_activate, jarvis_speech_recognize, jarvis_stop
-from modules.data_handler.data_handling import DataCollecting
+from modules.data_handler.data_handling import DataHandling
 from modules.commands.core import CommandHandling
 
 commands = CommandHandling()
-data = DataCollecting()
-assistant_name = data.get_settings("basic", "assistant_name")
+data = DataHandling()
+assistant_name = data.get_settings("assistant_name")
 
 
 
@@ -27,7 +27,7 @@ def run_jarvis(word=True):
 
     # Time Checking --- notification 
     last_active = time.time()
-    timeout_duration = data.get_settings("basic", "timeout_seconds")
+    timeout_duration = data.get_settings("timeout_seconds")
 
 
     while is_running:

@@ -1,13 +1,13 @@
 import webbrowser
 from modules.voice.speech import speak
-from modules.data_handler.data_handling import DataCollecting
+from modules.data_handler.data_handling import DataHandling
 from modules.services.ai_service import ArtificialIntelligence
 
 
 
 class BrowserHandling():
     def __init__(self):
-        self.data_handling = DataCollecting()
+        self.data_handling = DataHandling()
         self.ai = ArtificialIntelligence()
 
     def google_search(self, c):

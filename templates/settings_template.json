@@ -1,26 +1,83 @@
 {
-    "basic":{
-        "user_name": "user",
-        "assistant_name": "Jarvis",
-        "location": "kolkata",
-        "timeout_seconds": 60,
-        "voice_model": "en-IN-NeerjaNeural",
-        "language": "English"
+    "Basic Settings": {
+        "assistant_name": {
+            "label": "Enter the assistant name:",
+            "type": "entry",
+            "default": "jarvis"
+        },
+        "user_name": {
+            "label": "Enter the username: ",
+            "type": "entry",
+            "default": "User"
+        },
+        "location": {
+            "label": "Enter location: ",
+            "type": "entry",
+            "default": "Kolkata"
+        },
+        "timeout_seconds": {
+            "label": "Timeout Duration(in seconds): ",
+            "type": "slider",
+            "default": 1518.96
+        },
+        "voice_model": {
+            "label": "Choose The voice model: ",
+            "type": "option",
+            "default": "en-IN-AnanyaNeural"
+        },
+        "language": {
+            "label": "Choose preferred language: ",
+            "type": "option",
+            "default": "english"
+        }
     },
-    
-    "artificial_intelligence":{
-        "open_ai_api_key": "<Api_key>",
-        "open_ai_model": "llama-3.1-8b-instant",
-        "max_token": 100,
-        "prompt": ""
+    "AI Settings": {
+        "ai_api_key": {
+            "label": "Enter the API key: ",
+            "type": "entry",
+            "default": "<Api_key>"
+        },
+        "ai_model": {
+            "label": "Choose the AI model: ",
+            "type": "option",
+            "default": "llama-3.1-8b-instant"
+        },
+        "max_token": {
+            "label": "Enter max token: ",
+            "type": "slider",
+            "default": 400
+        }
     },
-
-    "commands": {
-        "stop": "stop jarvis",
-        "google_search": "search",
-        "play_media": "play",
-        "open_website": "open",
-        "weather": "weather update"
+    "Command Settings": {
+        "wake_word": {
+            "label": "Enter wake word: ",
+            "type": "entry",
+            "default": "jarvis"
+        },
+        "stop": {
+            "label": "Enter closing word: ",
+            "type": "entry",
+            "default": "stop jarvis"
+        },
+        "google_search": {
+            "label": "Enter search command: ",
+            "type": "entry",
+            "default": "search"
+        },
+        "play_media": {
+            "label": "Enter youtube play command: ",
+            "type": "entry",
+            "default": "play"
+        },
+        "open_website": {
+            "label": "Enter website opening command: ",
+            "type": "entry",
+            "default": "open"
+        },
+        "weather": {
+            "label": "Enter weather report command: ",
+            "type": "entry",
+            "default": "weather update"
+        }
     }
-    
 }

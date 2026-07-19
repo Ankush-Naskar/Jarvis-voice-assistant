@@ -1,9 +1,8 @@
 import customtkinter as ctk
 from gui.gui_elements import GuiFrameElements, GuiInputElements
 from gui.help_window import HelpPopUpWindow
-from modules.data_handler.gui_data import data_editing
-from modules.data_handler.data_handling import DataCollecting
 import webbrowser
+from modules.data_handler.data_handling import DataHandling
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -55,15 +54,12 @@ class SettingInterface(GuiInputElements, GuiFrameElements):
             "english"
 ]
 
-        self.lable_list1 = ["Enter your name:", "Enter assistant name:", "Enter location:", "Timeout duration:", "Voice model name:", "Language:"]
-        sub_keys_1 =  ["user_name", "assistant_name", "location", "timeout_seconds", "voice_model", "language", ]
-        self.placeholder_text_list1 = ["User", "Jarvis", "Kolkata", 1800, "en-IN-PrabhatNeural", "english"]
-
-        self.lable_list2=["Enter API Key:", "Choose AI model:", "Max response token:", "Custom System Prompt:"]
-        self.placeholder_text_list2 = ["API Key", "llama-3.1-8b-instant", 400, "Hello"]
-
-        self.lable_list3 = ["Function stop keyword: ", "Google search keyword:", "YT video play keyword:", "Site opening keyword:", "Weather update keyword:"]
-        self.placeholder_text_list3 = ["stop pogram", "search", "play", "open", "weather update"]
+        self.parent_keys = DataHandling().parent_key_list
+        self.child_key = DataHandling().child_key_list
+        self.lable = DataHandling().label_list
+        self.type = DataHandling().type_list
+        self.default = DataHandling().default_list
+  
 
         # ==================== Storage =======================
         self.storage = []
@@ -80,7 +76,7 @@ class SettingInterface(GuiInputElements, GuiFrameElements):
         self.lables(self.main_title_frame, "JARVIS Settings", fsize=28, **self.title_text_arguments) # Main Title
 
         # Main setting frame
-        self.main_frame = self.scrollable_frame(self.bg, 1240 , 650, color="#000000", side="top",  orientation="horizontal")
+        self.main_frame = self.scrollable_frame(self.bg, 1240 , 650, side="top",  color="#000000", orientation="horizontal")
 
         # Save cancel button frame and buttons
         self.final_button_frame = self.normal_frame(self.bg, 400, 50, side="bottom", anchor="se")
@@ -90,7 +86,8 @@ class SettingInterface(GuiInputElements, GuiFrameElements):
         # Secondary titles and title frames
         self.main_secondary_title_frame= self.normal_frame(self.main_frame, height=30, color="transparent", side="top", anchor="nw", fill="x", bwidth=0, x=0, y=0, corner=0)
 
-        secondary_titles = ["Basic Settings", "AI Settings", "Command Settings"]
+        # secondary_titles = ["Basic Settings", "AI Settings", "Command Settings"]
+        secondary_titles = list(dict.fromkeys(self.parent_keys))
         for secondary_title in secondary_titles:
             secondary_title_frames= self.normal_frame(self.main_secondary_title_frame, **self.title_frame_arguments)
             secondary_title_frames.pack_propagate(False)
@@ -99,56 +96,35 @@ class SettingInterface(GuiInputElements, GuiFrameElements):
 
     def gui(self):
        # 1st setting box
+       for frame in list(dict.fromkeys(self.parent_keys)):
+           setting_frame = self.scrollable_frame(self.main_frame, anchor="nw", y=(0,40))
 
-        basic_setting_frame = self.scrollable_frame(self.main_frame, anchor="nw", y=(0,40))
+           for el1, el2, el3, el4, el5 in zip(self.parent_keys, self.child_key, self.lable, self.type, self.default):
+               if frame == el1:
+                    self.lables(setting_frame, el3)
+                    if el4 == "entry":
+                       new_entry=self.entrys(setting_frame, el5)
+                    elif el4 == "slider":
+                        new_entry= self.slider_button(setting_frame, 150, 3600)
+                        new_entry.set(el5)
+                    elif el4 == "option":
+                        if el2 == "voice_model":
+                            new_entry = self.option_menu(setting_frame, self.voice_models)
+                            new_entry.set(el5)
+                        elif el2=="ai_model":
+                            new_entry = self.option_menu(setting_frame, self.ai_models)
+                            new_entry.set(el5)
+                        elif el2 == "language":
+                            new_entry = self.option_menu(setting_frame, self.supported_language)
+                            new_entry.set(el5)
 
-        for lable1, lable2 in zip(self.lable_list1, self.placeholder_text_list1):
-            self.lables(basic_setting_frame, lable1)
+                    if el2 == "ai_api_key":
+                        help_frame = self.normal_frame(setting_frame, 350, 30, side="top", anchor="nw", x=5, y=(0,5))
+                        self.buttons(help_frame,"Get API Key",100, 15,  side="right", x=(3,6), command=self.get_api_key_button_function)
+                        self.buttons(help_frame, "Help",50 , 15,x=(6,3), command=HelpPopUpWindow)
 
-            if lable1 == "Timeout duration:":
-                new_entry = self.slider_button(basic_setting_frame, 120, 3600)
-                new_entry.set(lable2)
-            elif lable1 == "Voice model name:":
-                new_entry = self.option_menu(basic_setting_frame, self.voice_models, )
-                new_entry.set(lable2)
-            elif lable1 == "Language:":
-                new_entry = self.option_menu(basic_setting_frame, self.supported_language, )
-                new_entry.set(lable2)
-            else:
-                new_entry=self.entrys(basic_setting_frame, lable2)
-            self.storage.append(new_entry)
-
-
-        # 2nd setting box
-        ai_setting_frame = self.scrollable_frame(self.main_frame, anchor="nw", y=(0,30))
-
-        for lable1, lable2 in zip(self.lable_list2, self.placeholder_text_list2):
-            self.lables(ai_setting_frame, lable1)
-
-            if lable1 == "Enter API Key:":
-                new_entry = self.entrys(ai_setting_frame, lable2)
-                # Help buttons 
-                help_frame = self.normal_frame(ai_setting_frame, 350, 30, side="top", anchor="nw", x=5, y=(0,5))
-                self.buttons(help_frame,"Get API Key",100, 15,  side="right", x=(3,6), command=self.get_api_key_button_function)
-                self.buttons(help_frame, "Help",50 , 15,x=(6,3), command=HelpPopUpWindow)
-            elif lable1 == "Choose AI model:":
-                new_entry = self.option_menu(ai_setting_frame, self.ai_models)
-                new_entry.set(lable2)
-            elif lable1 =="Max response token:":
-                new_entry= self.slider_button(ai_setting_frame, 150, 2000)
-                new_entry.set(lable2)
-            elif lable1 == "Custom System Prompt:":
-                new_entry = self.entrys(ai_setting_frame, lable2)
-            self.storage.append(new_entry)
-
-            
-#         # 3rd setting box
-        setting_frame3 = self.scrollable_frame(self.main_frame, anchor="nw", y=(0,30))
-
-        for lable1, lable2 in zip(self.lable_list3, self.placeholder_text_list3):
-            self.lables(setting_frame3, lable1)
-            new_entry=self.entrys(setting_frame3, lable2)
-            self.storage.append(new_entry)
+                    self.storage.append(new_entry)
+                        
 
     def cancel_button_function(self):
         self.destroy() 
@@ -160,7 +136,8 @@ class SettingInterface(GuiInputElements, GuiFrameElements):
             value = entry.get() 
             collected_data.append(value)
         
-        data_editing(collected_data)
+        print(collected_data)
+        DataHandling().collecting_entry_values(collected_data)
 
         self.destroy() 
         self.master.deiconify() 

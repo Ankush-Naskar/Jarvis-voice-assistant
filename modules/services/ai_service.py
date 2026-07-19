@@ -1,14 +1,14 @@
 from openai import OpenAI
-from modules.data_handler.data_handling import DataCollecting
+from modules.data_handler.data_handling import DataHandling
 
 class ArtificialIntelligence():
     def __init__(self):
         # Data Loading
-        data = DataCollecting()
-        API_KEY=data.get_settings("artificial_intelligence", "open_ai_api_key") # API Key
-        self.MODEl = data.get_settings("artificial_intelligence", "open_ai_model") # Model Name
-        self.MAX_TOKEN = data.get_settings("artificial_intelligence", "max_token") # Max token
-        self.ASSISTANT_NAME = data.get_settings("basic", "assistant_name") # Assistant Name
+        data = DataHandling()
+        API_KEY=data.get_settings("ai_api_key") # API Key
+        self.MODEl = data.get_settings("ai_model") # Model Name
+        self.MAX_TOKEN = data.get_settings("max_token") # Max token
+        self.ASSISTANT_NAME = data.get_settings("assistant_name") # Assistant Name
 
         self.client = OpenAI(
                 base_url="https://api.groq.com/openai/v1", # GROQ link
@@ -16,7 +16,7 @@ class ArtificialIntelligence():
                 )
         
         # History saving
-        self.history = [{"role": "system", "content": f"You are {self.ASSISTANT_NAME}, a helpful and friendly AI assistant. Made by Ankush"}]
+        self.history = [{"role": "system", "content": f"You are {self.ASSISTANT_NAME}, a helpful and friendly AI assistant."}]
 
     def AI(self, prompt):
         self.history.append({"role": "user", "content": prompt}) # Load history

@@ -1,8 +1,8 @@
 from plyer import notification
-from modules.data_handler.data_handling import DataCollecting
+from modules.data_handler.data_handling import DataHandling
 
-data = DataCollecting()
-assistant_name = data.get_settings("basic", "assistant_name")
+data = DataHandling()
+assistant_name = data.get_settings("assistant_name")
 
 
 
